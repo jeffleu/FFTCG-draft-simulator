@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
-import { filterByOpusAndRarity } from '../helper';
-import { cardDataApi } from '../constants';
+import { createBox } from '../helper';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,39 +12,38 @@ export default class App extends Component {
       randomImgSrc: null,
     };
 
-    this.getRandomCard = this.getRandomCard.bind(this);
+    this.getBox = this.getBox.bind(this);
   }
 
   componentWillMount() {
     axios.get('/getCardData')
-      .then(response => {
-        this.setState({cards: response.data});
-      })
-      .catch(error => {
-        console.log('error', error);
-      });
+      .then(response => this.setState({cards: response.data}))
+      .catch(error => console.log('error', error));
   }
 
-  getRandomCard() {
-    const opus1Legends = filterByOpusAndRarity(this.state.cards, 3, 'Hero');
-    console.log('opus1Legends', opus1Legends);
-    const randomIndex = Math.floor(Math.random() * opus1Legends.length);
-    console.log('card', opus1Legends[randomIndex]);
-    this.setState({
-      randomImgSrc: opus1Legends[randomIndex].image,
-    });
+  getBox() {
+    const box = createBox(this.state.cards, 3);
+    this.setState({box});
   }
 
   render() {
+    let packDisplay;
+
+    if (this.state.box) {
+      packDisplay = this.state.box[0].map((pack, i) => {
+        return <img className="card" src={pack.image} key={i}/>
+      });
+    }
+
     return (
       <div>
         <p>Hello, Reacts!</p>
         <div>
-          <button className="btn" onClick={this.getRandomCard}>Open Pack</button>
+          <button className="btn" onClick={this.getBox}>Get Box</button>
         </div>
-        <div>
-          <img className="card" src={this.state.randomImgSrc}/>
-        </div>
+        <span>
+          {packDisplay}
+        </span>
       </div>
     );
   }

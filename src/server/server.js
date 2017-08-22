@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
 import config from '../../webpack.config';
-import { getCardData } from './controllers/apiController';
+import { getCardData } from './controllers/cardController';
 
 const app = express();
 const port = 3000;
