@@ -1,7 +1,3 @@
-// FF Decks API
-// export const ffDecksApi = 'http://ffdecks.com/api/cards/basic';
-// export const cardDataApi = 'https://s3-us-west-1.amazonaws.com/final-fantasy-tcg/fftcg_data';
-
 // Box Distribution
 const packsPerBox = 36;
 const legendsPerBox = 7;
