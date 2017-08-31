@@ -51,7 +51,6 @@ const createBox = (cards, opus) => {
     packs.push(createPack(opusCards, rareCard));
   }
 
-  console.log('box', packs);
   return packs;
 };
 

@@ -1,4 +1,15 @@
+#nav {
+  height: 50px;
+  width: 100%;
+  background-color: lightblue;
+}
+
+#nav li {
+  display: inline;
+  padding-right: 5%;
+}
+
 .card {
-  width: 300px;
+  width: 150px;
   border-radius: 5px;
 }

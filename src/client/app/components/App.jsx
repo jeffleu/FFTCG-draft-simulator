@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import { createBox } from '../helper';
 
-export default class App extends Component {
+// Components
+import DraftSimulator from './DraftSimulator';
+import Home from './Home';
+import Nav from './Nav';
+import Search from './Search';
+
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cards: null,
-      randomImgSrc: null,
-    };
-
-    this.getBox = this.getBox.bind(this);
+      cards: [],
+    }
   }
 
   componentWillMount() {
@@ -21,30 +24,27 @@ export default class App extends Component {
       .catch(error => console.log('error', error));
   }
 
-  getBox() {
-    const box = createBox(this.state.cards, 3);
-    this.setState({box});
-  }
-
   render() {
-    let packDisplay;
-
-    if (this.state.box) {
-      packDisplay = this.state.box[0].map((pack, i) => {
-        return <img className="card" src={pack.image} key={i}/>
-      });
-    }
-
     return (
-      <div>
-        <p>Hello, Reacts!</p>
-        <div>
-          <button className="btn" onClick={this.getBox}>Get Box</button>
-        </div>
-        <span>
-          {packDisplay}
-        </span>
+      <div id="app">
+        <Nav/>
+
+        <Router>
+          <div>
+            <Route exact path="/" component={Home}/>
+            <Route path="/draft" component={DraftSimulator}/>
+          </div>
+        </Router>
+
+        <DraftSimulator cards={this.state.cards}/>
+
+        <object type="image/svg+xml" data="https://loading.io/spinners/blocks/index.rotating-squares-preloader-gif.svg">
+          Your browser does not support SVG.
+        </object>
+        
       </div>
     );
   }
 }
+
+export default App;
