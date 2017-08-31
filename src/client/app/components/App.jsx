@@ -32,7 +32,8 @@ class App extends Component {
         <Router>
           <div>
             <Route exact path="/" component={Home}/>
-            <Route path="/draft" component={DraftSimulator}/>
+            <Route path="search" component={Search}/>
+            <Route path="draft" component={DraftSimulator}/>
           </div>
         </Router>
 
