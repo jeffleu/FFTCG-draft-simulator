@@ -33,7 +33,7 @@ class App extends Component {
           <div>
             <Route exact path="/" component={Home}/>
             <Route path="/search" component={Search}/>
-            <Route path="/draft" component={DraftSimulator}/>
+            <Route path="/draft" render={ () => <DraftSimulator cards={this.state.cards}/> }/>
           </div>
         </Router>
 
