@@ -54,6 +54,7 @@ const createBox = (cards, opus) => {
   return packs;
 };
 
+// Create a pack of cards given a random Hero or Legend card
 const createPack = (opusCards, rareCard) => {
   const commons = getRandomizedAmount(opusCards, 'Common', commonsPerPack);
   const foil = getFoil(opusCards);
