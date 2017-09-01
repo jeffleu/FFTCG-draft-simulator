@@ -32,17 +32,14 @@ class App extends Component {
         <Router>
           <div>
             <Route exact path="/" component={Home}/>
-            <Route path="search" component={Search}/>
-            <Route path="draft" component={DraftSimulator}/>
+            <Route path="/search" component={Search}/>
+            <Route path="/draft" component={DraftSimulator}/>
           </div>
         </Router>
-
-        <DraftSimulator cards={this.state.cards}/>
 
         <object type="image/svg+xml" data="https://loading.io/spinners/blocks/index.rotating-squares-preloader-gif.svg">
           Your browser does not support SVG.
         </object>
-        
       </div>
     );
   }

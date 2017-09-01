@@ -13,6 +13,11 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 app.use(require('webpack-hot-middleware')(compiler));
 
+// Redirect user back to index.html (used with react-router-dom)
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'client/index.html'));
+});
+
 // Render static index route
 app.use(express.static(path.join(__dirname, '../client')));
 
