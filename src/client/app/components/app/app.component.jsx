@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
-import { createBox } from '../helper';
 
 // Components
-import DraftSimulator from './DraftSimulator';
-import Home from './Home';
-import Nav from './Nav';
-import Search from './Search';
+import DraftSimulator from '../draft-simulator/draft-simulator.component';
+import Home from '../home/home.component';
+import Nav from '../nav/nav.component';
+import Search from '../search/search.component';
 
 class App extends Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import {
   heroesPerBox,
   legendsPerBox,
   raresPerPack,
-} from './constants';
+} from '../../constants';
 
 // Get Opus from card's serial number
 const getOpus = card => Number(card.serial_number.split('-')[0]);

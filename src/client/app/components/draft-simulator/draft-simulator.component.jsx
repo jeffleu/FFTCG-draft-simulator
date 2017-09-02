@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { createBox } from '../helper';
+import { createBox } from './draft-simulator.helper';
 
 class DraftSimulator extends Component {
   constructor(props) {
