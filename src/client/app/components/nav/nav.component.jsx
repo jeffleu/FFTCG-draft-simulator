@@ -1,5 +1,5 @@
 import React from 'react';
-import { navLinks } from '../constants';
+import { navLinks } from '../../constants';
 
 const Nav = props => {
   const links = navLinks.map((link, index) => {
