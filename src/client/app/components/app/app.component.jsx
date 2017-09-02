@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 // Components
+import DeckEditor from '../deck-editor/deck-editor.component';
 import DraftSimulator from '../draft-simulator/draft-simulator.component';
 import Home from '../home/home.component';
 import Nav from '../nav/nav.component';
@@ -32,6 +33,7 @@ class App extends Component {
           <div>
             <Route exact path="/" component={Home}/>
             <Route path="/search" component={Search}/>
+            <Route path="/deck-editor" component={DeckEditor}/>
             <Route path="/draft" render={ () => <DraftSimulator cards={this.state.cards}/> }/>
           </div>
         </Router>
