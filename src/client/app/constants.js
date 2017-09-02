@@ -22,6 +22,11 @@ const navLinks = [
     icon: 'fa fa-search',
   },
   {
+    name: 'Deck Editor',
+    url: '/deck-editor',
+    icon: 'fa fa-pencil-square-o',
+  },
+  {
     name: 'Draft Simulator',
     url: '/draft',
     icon: 'fa',
