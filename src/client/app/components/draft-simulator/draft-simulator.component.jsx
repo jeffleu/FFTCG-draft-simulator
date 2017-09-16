@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { createBox } from './draft-simulator.helper';
+import { createBox, pickCard } from './draft-simulator.helper';
 
 class DraftSimulator extends Component {
   constructor(props) {
@@ -9,26 +9,49 @@ class DraftSimulator extends Component {
     this.state = {
       cards: [],
       box: [],
+
+      pack: [], // remove
+      selected: [], // remove
     };
 
     this.getBox = this.getBox.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
+    // console.log('newProps', newProps.cards.filter(card => card.type === 'Forward' && card.power === null));
+
     this.setState({cards: newProps.cards});
   }
 
   getBox(opus) {
     const box = createBox(this.state.cards, opus);
-    this.setState({box});
+    // this.setState({box});
+
+    // to remove, just using this to visually see pack getting smaller
+    const pack = box[0];
+    this.setState({box, pack});
+  }
+
+  selectCard() {
+    pickCard(this.state.pack, this.state.selected); // make sure to pass in player's cards array. Empty array for now
+    console.log('I choose you', this.state.selected);
+    this.setState({pack: this.state.pack, selected: this.state.selected});
   }
 
   render() {
     let packDisplay;
 
-    if (this.state.box.length) {
-      packDisplay = this.state.box[0].map((pack, i) => {
+    if (this.state.pack.length) {
+      packDisplay = this.state.pack.map((pack, i) => {
         return <img className="card" src={pack.image} key={i}/>
+      });
+    }
+
+    let selectedDisplay;
+
+    if (this.state.selected.length) {
+      selectedDisplay = this.state.selected.map((card, i) => {
+        return <img className="card" src={card.image} key={i}/>
       });
     }
 
@@ -40,9 +63,14 @@ class DraftSimulator extends Component {
           <button className="btn" onClick={() => this.getBox(1)}>Opus 1</button>
           <button className="btn" onClick={() => this.getBox(2)}>Opus 2</button>
           <button className="btn" onClick={() => this.getBox(3)}>Opus 3</button>
+          <button className="btn" onClick={() => this.selectCard()}>Select Card</button>
         </div>
         <span>
           {packDisplay}
+        </span>
+        <h1>selected</h1>
+        <span>
+          {selectedDisplay}
         </span>
 
       </div>
