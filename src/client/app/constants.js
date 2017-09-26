@@ -9,6 +9,10 @@ const commonsPerPack = 7;
 const raresPerPack = 3;
 const foilsPerPack = 1;
 
+// Draft Numbers
+const forwardsPerDraft = 30;
+const backupsPerDraft = 15;
+
 // Navigation Links
 const navLinks = [
   {
@@ -34,9 +38,11 @@ const navLinks = [
 ];
 
 export {
+  backupsPerDraft,
   cardsPerPack,
   commonsPerPack,
   foilsPerPack,
+  forwardsPerDraft,
   heroesPerBox,
   legendsPerBox,
   navLinks,
