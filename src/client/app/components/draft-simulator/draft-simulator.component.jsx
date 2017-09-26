@@ -18,8 +18,6 @@ class DraftSimulator extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // console.log('newProps', newProps.cards.filter(card => card.type === 'Forward' && card.power === null));
-
     this.setState({cards: newProps.cards});
   }
 
@@ -33,8 +31,7 @@ class DraftSimulator extends Component {
   }
 
   selectCard() {
-    pickCard(this.state.pack, this.state.selected); // make sure to pass in player's cards array. Empty array for now
-    console.log('I choose you', this.state.selected);
+    pickCard(this.state.pack, this.state.selected);
     this.setState({pack: this.state.pack, selected: this.state.selected});
   }
 
@@ -68,7 +65,7 @@ class DraftSimulator extends Component {
         <span>
           {packDisplay}
         </span>
-        <h1>selected</h1>
+        <h1>Selected {this.state.selected.length}</h1>
         <span>
           {selectedDisplay}
         </span>

@@ -1,7 +1,9 @@
 import _ from 'lodash';
 
 import {
+  backupsPerDraft,
   commonsPerPack,
+  forwardsPerDraft,
   heroesPerBox,
   legendsPerBox,
   raresPerPack,
@@ -29,6 +31,9 @@ const filterByOpus = (cards, opus) => cards.filter(card => opus === getOpus(card
 
 // Filters all card data by Rarity
 const filterByRarity = (cards, rarity) => cards.filter(card => rarity === card.rarity);
+
+// Filters all card data by Type
+const filterByType = (cards, type) => cards.filter(card => type === card.type);
 
 // Get certain amount of randomized cards by rarity
 const getRandomizedAmount = (opusCards, rarity, amount) => {
@@ -121,22 +126,75 @@ const getBackup = (pack, playerElements) => {
     selectedBackup = backups.shift();
   }
 
-  // Add remaining forwards back to pack
+  // Add remaining backups back to pack
   backups.forEach(backup => pack.push(backup));
 
   return selectedBackup;
 };
 
+// Selects random card from pack
+const getRandomCard = pack => {
+  const randomIndex = Math.floor(Math.random() * pack.length);
+  const randomCard = pack.splice(randomIndex, 1)[0];
+  return randomCard;
+};
+
+// Selects random card by element set
+const getRandomCardByElement = (pack, playerElements) => {
+  const elementCards = _.remove(pack, card => playerElements.has(card.element));
+  const randomCardByElement = getRandomCard(elementCards);
+
+  // Put remaining cards back into pack
+  if (elementCards.length) {
+    elementCards.forEach(card => pack.push(card));
+  }
+
+  return randomCardByElement;
+};
+
+// Checks if pack contains player's elements
+const hasPlayerElements = (pack, playerElements) => {
+  let result = false;
+
+  for (let i = 0; i < pack.length; i++) {
+    const card = pack[i];
+    if (playerElements.has(card.element)) {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+};
+
+// Checks if pack has certain element and type
+const hasElementAndType = (pack, playerElements, type) => {
+  let result = false;
+
+  for (let i = 0; i < pack.length; i++) {
+    const card = pack[i];
+    if (playerElements.has(card.element) && type === card.type) {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+};
+
 // Picks a card from the pack
 const pickCard = (pack, playerCards) => {
-  // Draft maximum 12 backups
-
-  console.log('pack before picking card', pack);
-
   const playerElements = new Set(playerCards.map((card) => card.element));
 
+  // Flags to see if pack has certain cards
   const hasLegend = filterByRarity(pack, 'Legend')[0];
   const hasHero = filterByRarity(pack, 'Hero')[0];
+  const hasForwards = filterByType(pack, 'Forward')[0];
+  const hasBackups = filterByType(pack, 'Backup')[0];
+
+  // Number of forwards and backups in hand
+  const forwardsCount = filterByType(playerCards, 'Forward').length;
+  const backupsCount = filterByType(playerCards, 'Backup').length;
 
   // Select card from pack
   let selectedCard;
@@ -150,17 +208,26 @@ const pickCard = (pack, playerCards) => {
     selectedCard = heroes.shift();
     if (heroes.length) pack.push(heroes.shift());
   } else {
-    // Need to check if there are forwards
-      // If there are forwards, run getForward
-      // If there are backups, run getBackup
-      // If there are summons, run getSummons
-    // selectedCard = getForward(pack, playerElements);
-    selectedCard = getBackup(pack, playerElements);
+    if (hasPlayerElements(pack, playerElements)) {
+      if (forwardsCount < forwardsPerDraft && hasElementAndType(pack, playerElements, 'Forward')) {
+        selectedCard = getForward(pack, playerElements);
+      } else if (backupsCount < backupsPerDraft && hasElementAndType(pack, playerElements, 'Backup')) {
+        selectedCard = getBackup(pack, playerElements);
+      } else {
+        selectedCard = getRandomCardByElement(pack, playerElements);
+      }
+    } else {
+      if (forwardsCount < forwardsPerDraft && hasForwards) {
+        selectedCard = getForward(pack, playerElements);
+      } else if (backupsCount < backupsPerDraft && hasBackups) {
+        selectedCard = getBackup(pack, playerElements);
+      } else {
+        selectedCard = getRandomCard(pack);
+      }
+    }
   }
 
-  console.log('selectedCard', selectedCard);
-  console.log('pack after picking card', pack);
-
+  // Add selected card to player's hand
   playerCards.push(selectedCard);
 
   return {selectedCard, pack};
@@ -171,9 +238,16 @@ export {
   createPack,
   filterByOpus,
   filterByRarity,
+  filterByType,
+  getBackup,
   getFoil,
+  getForward,
   getOpus,
+  getRandomCard,
+  getRandomCardByElement,
   getRandomizedAmount,
+  hasPlayerElements,
+  hasElementAndType,
   pickCard,
   shuffleCards,
 };
