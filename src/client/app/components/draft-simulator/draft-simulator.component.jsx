@@ -8,7 +8,17 @@ class DraftSimulator extends Component {
 
     this.state = {
       cards: [],
-      box: [],
+
+      box: [], // remove?
+
+      draftPacks: [],
+      round: null,
+      players: {
+        player1: null,
+        player2: null,
+        player3: null,
+        player4: null,
+      },
 
       pack: [], // remove
       selected: [], // remove
@@ -28,6 +38,35 @@ class DraftSimulator extends Component {
     // to remove, just using this to visually see pack getting smaller
     const pack = box[0];
     this.setState({box, pack});
+  }
+
+  addToDraftPacks(opus) {
+    if (this.state.draftPacks.length < 4) {
+      const draftPacks = this.state.draftPacks.concat(opus);
+      this.setState({draftPacks});
+    }    
+  }
+
+  startDraft() {
+    // Create all 3 Opus boxes
+    const boxes = {
+      opus1: createBox(this.state.cards, 1),
+      opus2: createBox(this.state.cards, 2),
+      opus3: createBox(this.state.cards, 3),
+    };
+
+    const players = {
+      player1: {currentPack: [], packs: [], hand: []},
+      player2: {currentPack: [], packs: [], hand: []},
+      player3: {currentPack: [], packs: [], hand: []},
+      player4: {currentPack: [], packs: [], hand: []},
+    };
+
+    this.setState({
+      round: 1,
+      players,
+      draftPacks: [], // empty out draft packs
+    });
   }
 
   selectCard() {
@@ -56,11 +95,19 @@ class DraftSimulator extends Component {
       <div id="draft-simulator">
         <h1>Draft Simulator</h1>
 
+        draft packs: {this.state.draftPacks}
+
         <div>
           <button className="btn" onClick={() => this.getBox(1)}>Opus 1</button>
           <button className="btn" onClick={() => this.getBox(2)}>Opus 2</button>
           <button className="btn" onClick={() => this.getBox(3)}>Opus 3</button>
+
+          <button className="btn" onClick={() => this.addToDraftPacks(1)}>Add Opus 1</button>
+          <button className="btn" onClick={() => this.addToDraftPacks(2)}>Add Opus 2</button>
+          <button className="btn" onClick={() => this.addToDraftPacks(3)}>Add Opus 3</button>
+
           <button className="btn" onClick={() => this.selectCard()}>Select Card</button>
+          <button className="btn" onClick={() => this.startDraft()}>Start Draft</button>
         </div>
         <span>
           {packDisplay}
