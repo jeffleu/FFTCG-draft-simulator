@@ -42,9 +42,8 @@ class DraftSimulator extends Component {
 
   addToDraftPacks(opus) {
     if (this.state.draftPacks.length < 4) {
-      const draftPacks = this.state.draftPacks.concat(opus);
-      this.setState({draftPacks});
-    }    
+      this.setState({ draftPacks: this.state.draftPacks.concat(opus) });
+    }
   }
 
   startDraft() {
@@ -55,6 +54,7 @@ class DraftSimulator extends Component {
       opus3: createBox(this.state.cards, 3),
     };
 
+    // Set up default players object
     const players = {
       player1: {currentPack: [], packs: [], hand: []},
       player2: {currentPack: [], packs: [], hand: []},
