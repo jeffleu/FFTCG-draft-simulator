@@ -11,6 +11,7 @@ class DraftSimulator extends Component {
 
       box: [], // remove?
 
+      boxes: null,
       draftPacks: [],
       round: null,
       players: {
@@ -62,10 +63,35 @@ class DraftSimulator extends Component {
       player4: {currentPack: [], packs: [], hand: []},
     };
 
+    // Get packs from boxes depending on which Opus was selected
+    this.state.draftPacks.forEach(pack => {
+      let opusBox;
+      if (pack === 1) {
+        opusBox = boxes.opus1;
+      } else if (pack === 2) {
+        opusBox = boxes.opus2;
+      } else if (pack === 3) {
+        opusBox = boxes.opus3;
+      }
+
+      if (!players.player1.currentPack.length) {
+        players.player1.currentPack = opusBox.shift();
+        players.player2.currentPack = opusBox.shift();
+        players.player3.currentPack = opusBox.shift();
+        players.player4.currentPack = opusBox.shift();
+      } else {
+        players.player1.packs.push(opusBox.shift());
+        players.player2.packs.push(opusBox.shift());
+        players.player3.packs.push(opusBox.shift());
+        players.player4.packs.push(opusBox.shift());
+      }
+    });
+
     this.setState({
+      boxes,
       round: 1,
       players,
-      draftPacks: [], // empty out draft packs
+      draftPacks: [],
     });
   }
 
