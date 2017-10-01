@@ -10,6 +10,39 @@
 }
 
 .card {
-  width: 250px;
+  width: 15%;
   border-radius: 5px;
+  margin: 1% 1%;
+}
+
+.card-list-fire {
+  color: red;
+}
+
+.card-list-ice {
+  color: lightblue;
+}
+
+.card-list-wind {
+  color: green;
+}
+
+.card-list-earth {
+  color: yellow;
+}
+
+.card-list-lightning {
+  color: purple;
+}
+
+.card-list-water {
+  color: blue;
+}
+
+.card-list-light {
+  color: lightgray;
+}
+
+.card-list-dark {
+  color: gray;
 }

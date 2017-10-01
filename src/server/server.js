@@ -5,7 +5,7 @@ import config from '../../webpack.config';
 import { getCardData } from './controllers/cardController';
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
 const compiler = webpack(config);
 app.use(require('webpack-dev-middleware')(compiler, {

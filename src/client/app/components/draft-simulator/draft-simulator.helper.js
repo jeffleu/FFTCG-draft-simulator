@@ -183,7 +183,7 @@ const hasElementAndType = (pack, playerElements, type) => {
 };
 
 // Picks a card from the pack
-const pickCard = (pack, playerCards) => {
+const aiPickCard = (pack, playerCards) => {
   const playerElements = new Set(playerCards.map((card) => card.element));
 
   // Flags to see if pack has certain cards
@@ -234,6 +234,7 @@ const pickCard = (pack, playerCards) => {
 };
 
 export {
+  aiPickCard,
   createBox,
   createPack,
   filterByOpus,
@@ -248,6 +249,5 @@ export {
   getRandomizedAmount,
   hasPlayerElements,
   hasElementAndType,
-  pickCard,
   shuffleCards,
 };
